@@ -43,6 +43,10 @@ function App() {
     setExpenseToBeEdited(expenseToBeEdited);
   };
 
+  const editClickHandler = setIsEditing => {
+    setIsEditing(true);
+  }
+
   console.log(expenseToBeEdited);
 
   const editExpenseHandler = (editedExpense) => {
@@ -62,7 +66,7 @@ function App() {
 
   return (
     <div>
-      <NewExpense onAddExpense={addExpenseHandler} expenseToBeEdited={expenseToBeEdited} onEditExpense={editExpenseHandler} />
+      <NewExpense onAddExpense={addExpenseHandler} expenseToBeEdited={expenseToBeEdited} onEditExpense={editExpenseHandler} onEditClick={editClickHandler} />
       <Expenses expenses={expenses} onEdit={editHandler} />
     </div>
   );

@@ -35,6 +35,10 @@ const NewExpense = (props) => {
     setIsEditing(false);
   };
 
+  if (props.expenseToBeEdited) {
+    props.onEditClick(setIsEditing);
+  }
+
   return (
     <div className="new-expense">
       {!isAdding && !isEditing && (
@@ -46,7 +50,7 @@ const NewExpense = (props) => {
           onCancel={stopAddingHandler}
         />
       )}
-      {!isEditing && (
+      {isEditing && (
         <EditExpenseForm
           onSaveEditExpenseData={saveEditExpenseDataHandler}
           onCancel={stopEditingHandler}
