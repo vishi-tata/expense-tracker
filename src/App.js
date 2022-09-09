@@ -30,16 +30,40 @@ function App() {
       date: new Date(2021, 5, 12),
     },
   ]);
+
+  const [expenseToBeEdited, setExpenseToBeEdited] = useState([]);
+
   const addExpenseHandler = (expense) => {
-    setExpenses((prevExpense) => {
-      return [expense, ...prevExpense];
+    setExpenses((prevExpenses) => {
+      return [expense, ...prevExpenses];
     });
   }
 
+  const editHandler = (expenseToBeEdited) => {
+    setExpenseToBeEdited(expenseToBeEdited);
+  };
+
+  console.log(expenseToBeEdited);
+
+  const editExpenseHandler = (editedExpense) => {
+    setExpenses((prevExpenses) => {
+      for (const prevExpense of prevExpenses) {
+        if (prevExpense.id === expenseToBeEdited.id) {
+          prevExpense.title = editedExpense.title;
+          prevExpense.amount = editedExpense.amount;
+          prevExpense.date = editedExpense.date;
+        }
+      }
+      return prevExpenses;
+    })
+  };
+
+
+
   return (
     <div>
-      <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses expenses={expenses} />
+      <NewExpense onAddExpense={addExpenseHandler} expenseToBeEdited={expenseToBeEdited} onEditExpense={editExpenseHandler} />
+      <Expenses expenses={expenses} onEdit={editHandler} />
     </div>
   );
 }

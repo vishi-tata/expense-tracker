@@ -18,6 +18,13 @@ const Expenses = (props) => {
     (expense) => expense.date.getFullYear().toString() === filteredYear
   );
 
+  const editHandler = (id) => {
+    const expenseToBeEdited = filteredExpenses.filter(
+      (expense) => expense.id === id
+    );
+    props.onEdit(expenseToBeEdited);
+  };
+
   return (
     <Card className="expenses">
       <ExpenseChart expenses={filteredExpenses} />
@@ -25,7 +32,7 @@ const Expenses = (props) => {
         onChangeFilter={filterChangeHandler}
         filteredYear={filteredYear}
       />
-      <ExpensesList filteredExpenses={filteredExpenses} />
+      <ExpensesList filteredExpenses={filteredExpenses} onEdit={editHandler} />
     </Card>
   );
 };
