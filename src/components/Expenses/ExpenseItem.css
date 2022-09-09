@@ -35,6 +35,19 @@
   border-radius: 12px;
 }
 
+.btn {
+  border: 1px solid #ececec;
+  background-color: #2a2a2a;
+  color: white;
+  border-radius: 6px;
+  margin-left: 6px;
+}
+
+.btn:hover {
+  background-color: #3f3d3d;
+  cursor: pointer;
+}
+
 @media (min-width: 580px) {
   .expense-item__description {
     flex-direction: row;

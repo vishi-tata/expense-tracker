@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import EditExpenseForm from './components/EditExpense/EditExpenseForm';
 
 import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpense/NewExpense';
@@ -32,6 +33,7 @@ function App() {
   ]);
 
   const [expenseToBeEdited, setExpenseToBeEdited] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
 
   const addExpenseHandler = (expense) => {
     setExpenses((prevExpenses) => {
@@ -40,34 +42,35 @@ function App() {
   }
 
   const editHandler = (expenseToBeEdited) => {
+    setIsEditing(true);
     setExpenseToBeEdited(expenseToBeEdited);
   };
 
-  const editClickHandler = setIsEditing => {
-    setIsEditing(true);
+  const deleteHandler = (expenseToBeDeleted) => {
+    setExpenses((prevExpenses) => {
+      return prevExpenses.filter(prevExpense => prevExpense.id !== expenseToBeDeleted.id)
+    })
   }
 
-  console.log(expenseToBeEdited);
+  const editCancelHandler = () => {
+    setIsEditing(false);
+  }
 
   const editExpenseHandler = (editedExpense) => {
+    setIsEditing(false);
     setExpenses((prevExpenses) => {
-      for (const prevExpense of prevExpenses) {
-        if (prevExpense.id === expenseToBeEdited.id) {
-          prevExpense.title = editedExpense.title;
-          prevExpense.amount = editedExpense.amount;
-          prevExpense.date = editedExpense.date;
-        }
-      }
-      return prevExpenses;
+      const oldExpenses = prevExpenses.filter(prevExpense => prevExpense.id !== editedExpense.id)
+      const newExpenses = [editedExpense, ...oldExpenses];
+      return newExpenses;
     })
   };
 
 
 
   return (
-    <div>
-      <NewExpense onAddExpense={addExpenseHandler} expenseToBeEdited={expenseToBeEdited} onEditExpense={editExpenseHandler} onEditClick={editClickHandler} />
-      <Expenses expenses={expenses} onEdit={editHandler} />
+    <div>{isEditing && <EditExpenseForm expenseToBeEdited={expenseToBeEdited} onEditCancel={editCancelHandler} onSaveEditExpenseData={editExpenseHandler} />}
+      {!isEditing && <NewExpense onAddExpense={addExpenseHandler} />}
+      <Expenses expenses={expenses} onEdit={editHandler} onDelete={deleteHandler} />
     </div>
   );
 }

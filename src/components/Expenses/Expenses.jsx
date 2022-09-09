@@ -22,7 +22,14 @@ const Expenses = (props) => {
     const expenseToBeEdited = filteredExpenses.filter(
       (expense) => expense.id === id
     );
-    props.onEdit(expenseToBeEdited);
+    props.onEdit(expenseToBeEdited[0]);
+  };
+
+  const deleteHandler = (id) => {
+    const expenseToBeDeleted = filteredExpenses.filter(
+      (expense) => expense.id === id
+    );
+    props.onDelete(expenseToBeDeleted[0]);
   };
 
   return (
@@ -32,7 +39,11 @@ const Expenses = (props) => {
         onChangeFilter={filterChangeHandler}
         filteredYear={filteredYear}
       />
-      <ExpensesList filteredExpenses={filteredExpenses} onEdit={editHandler} />
+      <ExpensesList
+        filteredExpenses={filteredExpenses}
+        onEdit={editHandler}
+        onDelete={deleteHandler}
+      />
     </Card>
   );
 };

@@ -5,6 +5,9 @@ const ExpensesList = (props) => {
   const editHandler = (id) => {
     props.onEdit(id);
   };
+  const deleteHandler = (id) => {
+    props.onDelete(id);
+  };
   if (props.filteredExpenses.length === 0) {
     return <h2 className="expenses-list__fallback">No Expenses found!</h2>;
   }
@@ -18,6 +21,7 @@ const ExpensesList = (props) => {
           title={expense.title}
           amount={expense.amount}
           onEdit={editHandler}
+          onDelete={deleteHandler}
         />
       ))}
     </ul>
